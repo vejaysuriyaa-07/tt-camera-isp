@@ -1,20 +1,19 @@
-<!---
-
-This file is used to generate your project datasheet. Please fill in the information below and delete any unused
-sections.
-
-You can also include images in this folder and reference them in the markdown. Each image must be less than
-512 kb in size, and the combined size of all images must be less than 1 MB.
--->
-
 ## How it works
 
-Explain how your project works
+This project is the front end of a camera image signal processor (ISP). It takes raw 8-bit pixels from a Bayer-pattern image sensor and processes them in fixed-point hardware:
+
+1. **Black level correction:** subtracts the sensor's black level, with the result floored at 0
+2. **White balance:** multiplies each pixel by a gain chosen by its Bayer color position (8-bit Q2.6 gains, rounded and saturated)
+3. **Gamma:** applies a piecewise-linear tone curve
+
+The hardware is verified bit for bit against a Python golden model driven by real RAW photos.
+
+**Status:** work in progress. The current RTL is still the Tiny Tapeout example design. The ISP front end replaces it before submission.
 
 ## How to test
 
-Explain how to use your project
+Set the black level and white balance gains over SPI on the bidirectional pins, then stream Bayer pixels on `ui_in` and read the processed pixels on `uo_out`. Full pin details will be added with the RTL.
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+None. Uses the Tiny Tapeout demo board.
